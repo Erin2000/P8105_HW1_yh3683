@@ -5,26 +5,128 @@ date: "2024-09-15"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+Before the Problem I have install.packages("palmerpenguins")in the conclose directly.
+
+# Problem 1
+
+```{r, echo=FALSE}
+library(palmerpenguins)
+data("penguins", package = "palmerpenguins")
+
+summary(penguins)
 ```
 
-## R Markdown
+## 1.Short description of the penguins dataset
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### Important variables 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+**(1)Species:Adelie(152), Chinstrap(68), Gentoo(124)**
 
-```{r cars}
-summary(cars)
+**(2)island:Biscoe(168), Dream(124), Torgersen(52)**
+
+**(3)bill_length_mm:The length of the penguin's bill in millimeters.**
+
+**(4)bill_depth_mm:The depth of the penguin's bill in millimeters.**
+
+**(5)flipper_length_mm:The length of the penguin's flipper in millimeters.**
+
+**(6)body_mass_g:The body mass of the penguin in grams.**
+
+**(7)sex： Female(165), Male(168) **
+
+**(8)year:The year in which the penguin was observed(2007-2009)**
+
+### The size of the dataset
+
+```{r, echo=TRUE}
+# rows of dataset
+nrow(penguins)
+# columns of dataset
+ncol(penguins)
+```
+**The rows of this dataset is 344 and the columns of this dataset is 8.**
+### The mean of  flipper length
+```{recho=FALSE}
+mean(penguins$flipper_length_mm, na.rm = TRUE)
+```
+**The mean of flipper_length is 200.9152 mm.**
+
+## 2.Make a scatterplot of flipper_length_mm (y) vs bill_length_mm (x)
+
+input data and pakages
+```{r, echo=FALSE}
+# Load necessary libraries
+library(ggplot2)
+library(palmerpenguins)
+
+# Load the penguins dataset
+data("penguins", package = "palmerpenguins")
+
+```
+Create the scatterplot
+```{r yx_scatter}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + 
+  geom_point() +
+  labs(title = "Scatterplot of Flipper Length vs Bill Length",
+       x = "Bill Length (mm)",
+       y = "Flipper Length (mm)",
+       color = "Species") +
+  theme_minimal()
+
+```
+Export the first ggplot.
+```{r, echo=FALSE}
+ggsave("scatter_plot.png")
 ```
 
-## Including Plots
+# Problem 2
 
-You can also embed plots, for example:
+## Create the Data Frame
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r echo=FALSE}
+library(tidyverse)
+example_df = tibble(
+  vec_char = c("A","B","C","D","E","F","G","H","I","J"),
+  vec_numeric = rnorm(10),
+  vec_logical = vec_numeric > 0,
+  vec_factor = factor(c("LEVEL1","LEVEL2","LEVEL3",
+                        "LEVEL1","LEVEL2","LEVEL3",
+                        "LEVEL1","LEVEL2","LEVEL3",
+                        "LEVEL1"))
+)
+example_df
+
 ```
+## Taking the Mean of Each Variable
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+mean_sample <- mean(df %>% pull(sample_data))  
+mean_logical <- mean(df %>% pull(logical_vector))  
+mean_character <- mean(df %>% pull(character_vector))  
+mean_factor <- mean(df %>% pull(factor_vector))  
+
+**sample_data**: This works because it is numeric. mean() can compute the mean of numeric vectors.
+
+**logical_vector**: This works because logical values in R are coerced to numeric when using mean(), where TRUE becomes 1 and FALSE becomes 0.
+
+**character_vector**: This fails because characters cannot be coerced to numeric directly. mean() doesn't know how to handle non-numeric values.
+
+**factor_vector**: This fails because factors are internally stored as integers, but mean() does not automatically convert these integers in a meaningful way.
+
+## Applying as.numeric() to Each Variable
+
+```{r, warning=FALSE, results='hide'}
+print(as.numeric(example_df$vec_char))
+print(as.numeric(example_df$vec_logical))
+print(as.numeric(example_df$vec_factor))
+```
+The outputs occur because as.numeric() shows differently for each variable type: it returns NA for character vectors since they can't be directly converted to numbers; it converts logical vectors to 0 (for FALSE) and 1 (for TRUE); and it converts factor vectors to their internal numeric codes representing the factor levels (e.g., "Level1" = 1, "Level2" = 2).
+
+
+
+
+
+
+
+
+
+
