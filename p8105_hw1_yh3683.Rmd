@@ -2,7 +2,7 @@
 title: "p8105_hw1_yh683"
 author: "Yining He"
 date: "2024-09-15"
-output: html_document
+output: github_document
 ---
 
 Before the Problem I have install.packages("palmerpenguins")in the conclose directly.
@@ -33,7 +33,7 @@ summary(penguins)
 
 **(6)body_mass_g:The body mass of the penguin in grams.**
 
-**(7)sex： Female(165), Male(168) **
+**(7)sex： Female(165), Male(168)**
 
 **(8)year:The year in which the penguin was observed(2007-2009)**
 
@@ -46,6 +46,8 @@ nrow(penguins)
 ncol(penguins)
 ```
 **The rows of this dataset is 344 and the columns of this dataset is 8.**
+
+
 ### The mean of  flipper length
 ```{r, echo=FALSE}
 mean(pull(penguins, flipper_length_mm), na.rm = TRUE)
@@ -99,12 +101,11 @@ example_df
 
 ```
 ## Taking the Mean of Each Variable
-```{r}
+
 mean_sample <- mean(df %>% pull(sample_data))  
 mean_logical <- mean(df %>% pull(logical_vector))  
 mean_character <- mean(df %>% pull(character_vector))  
-mean_factor <- mean(df %>% pull(factor_vector))  
-```
+mean_factor <- mean(df %>% pull(factor_vector))
 
 **sample_data**: This works because it is numeric. mean() can compute the mean of numeric vectors.
 
@@ -117,9 +118,10 @@ mean_factor <- mean(df %>% pull(factor_vector))
 ## Applying as.numeric() to Each Variable
 
 ```{r, warning=FALSE, results='hide'}
-print(as.numeric(example_df$vec_char))
-print(as.numeric(example_df$vec_logical))
-print(as.numeric(example_df$vec_factor))
+print(as.numeric(example_df[["vec_char"]]))
+print(as.numeric(example_df[["vec_logical"]]))
+print(as.numeric(example_df[["vec_factor"]]))
+
 ```
 The outputs occur because as.numeric() shows differently for each variable type: it returns NA for character vectors since they can't be directly converted to numbers; it converts logical vectors to 0 (for FALSE) and 1 (for TRUE); and it converts factor vectors to their internal numeric codes representing the factor levels (e.g., "Level1" = 1, "Level2" = 2).
 
