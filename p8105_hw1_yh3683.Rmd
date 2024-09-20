@@ -10,6 +10,7 @@ Before the Problem I have install.packages("palmerpenguins")in the conclose dire
 # Problem 1
 
 ```{r, echo=FALSE}
+library(tidyverse)
 library(palmerpenguins)
 data("penguins", package = "palmerpenguins")
 
@@ -46,8 +47,8 @@ ncol(penguins)
 ```
 **The rows of this dataset is 344 and the columns of this dataset is 8.**
 ### The mean of  flipper length
-```{recho=FALSE}
-mean(penguins$flipper_length_mm, na.rm = TRUE)
+```{r, echo=FALSE}
+mean(pull(penguins, flipper_length_mm), na.rm = TRUE)
 ```
 **The mean of flipper_length is 200.9152 mm.**
 
@@ -98,11 +99,12 @@ example_df
 
 ```
 ## Taking the Mean of Each Variable
-
+```{r}
 mean_sample <- mean(df %>% pull(sample_data))  
 mean_logical <- mean(df %>% pull(logical_vector))  
 mean_character <- mean(df %>% pull(character_vector))  
 mean_factor <- mean(df %>% pull(factor_vector))  
+```
 
 **sample_data**: This works because it is numeric. mean() can compute the mean of numeric vectors.
 
